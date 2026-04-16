@@ -1,0 +1,89 @@
+{
+  "stage0": {
+    "id": "entry",
+    "eyebrow": "Start Here",
+    "question": "What describes your situation right now?",
+    "subtitle": "Pick what fits best — your entire path adapts to your answer.",
+    "stateKey": "entryChoice",
+    "gridClass": "grid-2col",
+    "options": [
+      { "id": "just-stopped", "icon": "🚔", "label": "I was just stopped",         "sublabel": "Very recent stop or traffic contact" },
+      { "id": "arrested",     "icon": "🚨", "label": "I was arrested last night",   "sublabel": "Taken into custody recently" },
+      { "id": "paperwork",    "icon": "📋", "label": "I already got paperwork",     "sublabel": "Citation or revocation notice" },
+      { "id": "license",      "icon": "🚗", "label": "I'm worried about my license","sublabel": "Driving privileges at risk" },
+      { "id": "court",        "icon": "⚖️", "label": "I have court coming up",      "sublabel": "Court date scheduled" },
+      { "id": "cost",         "icon": "💰", "label": "I'm most worried about the cost","sublabel": "Fines, fees, and future impact" }
+    ]
+  },
+
+  "stage1": {
+    "id": "situation",
+    "eyebrow": "Step 1 of 5",
+    "question": "What happened when police stopped you?",
+    "subtitle": "This determines where you are in the process.",
+    "stateKey": "situation",
+    "options": [
+      { "id": "arrested", "icon": "🚨", "label": "I was arrested and taken to jail", "sublabel": "Handcuffed, transported, booked" },
+      { "id": "cited",    "icon": "📋", "label": "I was cited and released",          "sublabel": "Given a ticket or citation at the scene" },
+      { "id": "unsure",   "icon": "❓", "label": "I'm not exactly sure",             "sublabel": "Still processing what happened" }
+    ]
+  },
+
+  "stage2": {
+    "id": "test",
+    "eyebrow": "Step 2 of 5",
+    "question": "What happened with the chemical test?",
+    "subtitle": "This has the biggest impact on your license and charges.",
+    "stateKey": "testType",
+    "options": [
+      { "id": "breath",  "icon": "💨", "label": "I took a breath test",     "sublabel": "Breathalyzer or DataMaster device" },
+      { "id": "blood",   "icon": "🩸", "label": "I took a blood test",      "sublabel": "Blood draw at station or hospital" },
+      { "id": "urine",   "icon": "🧪", "label": "I took a urine test",      "sublabel": "Urine sample collected" },
+      { "id": "refused", "icon": "✋", "label": "I refused the test",        "sublabel": "Declined any chemical test" },
+      { "id": "unsure",  "icon": "❓", "label": "I'm not sure",             "sublabel": "I don't know what was collected" }
+    ]
+  },
+
+  "stage3": {
+    "id": "fear",
+    "eyebrow": "Step 3 of 5",
+    "question": "What are you most worried about right now?",
+    "subtitle": "Your biggest concern shapes your path — pick the one that matters most.",
+    "stateKey": "biggestFear",
+    "gridClass": "grid-2col",
+    "options": [
+      { "id": "jail",      "icon": "🔒", "label": "Going to jail",          "sublabel": "Worried about incarceration" },
+      { "id": "license",   "icon": "🚗", "label": "Losing my license",      "sublabel": "Ability to drive to work" },
+      { "id": "interlock", "icon": "🔑", "label": "Ignition interlock",     "sublabel": "Breathalyzer in my car" },
+      { "id": "cost",      "icon": "💰", "label": "The cost of all this",   "sublabel": "Fines, fees, and attorney costs" },
+      { "id": "job",       "icon": "💼", "label": "Impact on my job",       "sublabel": "Employment and driving record" },
+      { "id": "court",     "icon": "⚖️", "label": "Going to court",         "sublabel": "The legal process itself" }
+    ]
+  },
+
+  "stage4": {
+    "id": "history",
+    "eyebrow": "Step 4 of 5",
+    "question": "Have you had any DWI charges in the last 10 years?",
+    "subtitle": "Prior history significantly affects your charge level and options.",
+    "stateKey": "priorHistory",
+    "options": [
+      { "id": "first",     "icon": "1️⃣", "label": "No — this is my first DWI",       "sublabel": "No prior DWI charges" },
+      { "id": "one-prior", "icon": "2️⃣", "label": "Yes — one prior DWI",             "sublabel": "One previous charge in last 10 years" },
+      { "id": "multiple",  "icon": "⚠️", "label": "Yes — multiple prior DWIs",       "sublabel": "Two or more previous charges" }
+    ]
+  },
+
+  "stage5": {
+    "id": "county",
+    "eyebrow": "Step 5 of 5 — Final Question",
+    "question": "Where were you stopped or arrested?",
+    "subtitle": "Local courts matter. We know the judges, prosecutors, and procedures.",
+    "stateKey": "county",
+    "options": [
+      { "id": "olmsted",    "icon": "📍", "label": "Olmsted County",           "sublabel": "Rochester and surrounding area" },
+      { "id": "blue-earth", "icon": "📍", "label": "Blue Earth County",        "sublabel": "Mankato and surrounding area" },
+      { "id": "other",      "icon": "📍", "label": "Other Minnesota county",   "sublabel": "Elsewhere in southern Minnesota" }
+    ]
+  }
+}

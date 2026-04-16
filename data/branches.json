@@ -1,0 +1,103 @@
+{
+  "_comment": "Branching logic rules for the DWI Path tool. Implemented in js/branching-engine.js.",
+
+  "toneRules": [
+    {
+      "conditions": { "testType": "refused", "priorHistory": "multiple" },
+      "tone": "critical",
+      "description": "Test refusal + multiple priors = felony territory — maximum urgency"
+    },
+    {
+      "conditions": { "testType": "refused" },
+      "tone": "urgent",
+      "description": "Test refusal alone triggers dual criminal/civil consequences"
+    },
+    {
+      "conditions": { "priorHistory": "multiple" },
+      "tone": "urgent",
+      "description": "Multiple priors mean felony charges and mandatory minimums"
+    },
+    {
+      "conditions": { "priorHistory": "one-prior" },
+      "tone": "concerned",
+      "description": "Second DWI = gross misdemeanor with elevated penalties"
+    },
+    {
+      "conditions": { "priorHistory": "first" },
+      "tone": "calm",
+      "description": "First offense has the best range of outcomes with proper representation"
+    }
+  ],
+
+  "urgencyModifiers": {
+    "testType": {
+      "refused": 1.6,
+      "blood":   1.15,
+      "urine":   1.10,
+      "breath":  1.0,
+      "unsure":  1.0
+    },
+    "priorHistory": {
+      "multiple":  1.35,
+      "one-prior": 1.15,
+      "first":     1.0
+    },
+    "situation": {
+      "arrested": 1.1,
+      "cited":    0.9,
+      "unsure":   1.0
+    },
+    "entryChoice": {
+      "court":        1.1,
+      "just-stopped": 0.95,
+      "arrested":     1.05,
+      "paperwork":    1.0,
+      "license":      1.0,
+      "cost":         1.0
+    }
+  },
+
+  "roadmapActivation": {
+    "stop":    "situation is answered",
+    "test":    "testType is answered",
+    "license": "testType AND (refusal OR arrested OR has_priors)",
+    "court":   "county is answered",
+    "outcome": "all 5 questions answered",
+    "next":    "results shown"
+  },
+
+  "alertNodes": {
+    "test":    "testType === refused",
+    "license": "testType === refused"
+  },
+
+  "specialCases": {
+    "refusal": {
+      "description": "Test refusal triggers a separate criminal charge AND civil revocation",
+      "roadmapHighlight": ["test", "license"],
+      "urgencyOverride": 8.5,
+      "warningLevel": "critical",
+      "sevenDayDeadline": true
+    },
+    "firstOffense": {
+      "description": "First offense has the broadest range of outcomes — focus on preserving options",
+      "tone": "calm",
+      "ctaEmphasis": "options"
+    },
+    "multiplePriors": {
+      "description": "Third+ DWI within 10 years = felony with mandatory 180-day minimum",
+      "tone": "urgent",
+      "ctaEmphasis": "immediate representation",
+      "warningLevel": "critical"
+    },
+    "olmstedCounty": {
+      "description": "We know Olmsted County Third Judicial District — local advantage",
+      "countyNote": "Rochester office 5 minutes from courthouse",
+      "localEmphasis": true
+    },
+    "blueEarthCounty": {
+      "description": "Blue Earth County Fifth Judicial District — Mankato",
+      "localEmphasis": true
+    }
+  }
+}

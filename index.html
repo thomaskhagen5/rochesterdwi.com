@@ -1,18 +1,156 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
-    <title>To-Do List</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="description" content="Map My Minnesota DWI Path — A personalized, step-by-step decision engine that shows you exactly what comes next after a DWI in Rochester, Minnesota.">
+  <meta name="robots" content="index, follow">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Map My Minnesota DWI Path | Rochester DWI Law">
+  <meta property="og:description" content="Answer 5 questions. Get your personalized DWI action plan, risk scorecard, and next steps — right now.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://rochesterdwi.com">
+
+  <title>Map My Minnesota DWI Path | Rochester DWI Law — 507-625-5000</title>
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/journey.css">
+  <link rel="stylesheet" href="css/cards.css">
+  <link rel="stylesheet" href="css/risk-meter.css">
+
+  <!-- Favicon placeholder — replace with actual favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚖️</text></svg>">
 </head>
 <body>
-    <div class="container">
-        <h1>To-Do List</h1>
-        <input type="text" id="task-input" placeholder="Add a new task">
-        <button id="add-task-btn">Add Task</button>
-        <ul id="task-list"></ul>
+
+  <!-- ============================================================
+       HEADER
+  ============================================================ -->
+  <header class="app-header">
+    <div class="header-inner">
+      <div class="header-logo">
+        <span class="header-logo-name">Rochester DWI Law</span>
+        <span class="header-logo-sub">K&amp;H Minnesota Law · khmnlaw.com</span>
+      </div>
+      <a href="tel:5076255000" class="header-cta" aria-label="Call us at 507-625-5000">
+        <span class="cta-icon" aria-hidden="true">📞</span>
+        <span>507-625-5000</span>
+      </a>
     </div>
-    <script src="app.js"></script>
+  </header>
+
+  <!-- ============================================================
+       APP WRAPPER
+  ============================================================ -->
+  <div class="app-wrapper">
+
+    <!-- Mobile Journey Roadmap (top bar) -->
+    <nav class="journey-mobile" id="roadmap-mobile" aria-label="Your DWI path progress">
+      <!-- Built by JS -->
+    </nav>
+
+    <!-- Three-column layout -->
+    <div class="app-container">
+
+      <!-- LEFT: Journey roadmap (desktop sidebar) -->
+      <aside class="journey-panel" aria-label="Case path roadmap">
+        <div class="journey-panel-header">
+          <div class="journey-panel-title">Your Case Path</div>
+          <div class="journey-panel-headline">Map My Minnesota DWI Path</div>
+        </div>
+
+        <!-- Roadmap nodes — built by JS -->
+        <nav class="roadmap" id="roadmap" aria-label="DWI journey stages"></nav>
+
+        <!-- Panel footer -->
+        <div class="journey-panel-footer">
+          <div class="journey-call-prompt">Questions? Call us now</div>
+          <a href="tel:5076255000" class="journey-call-link" aria-label="Call 507-625-5000">
+            <span class="journey-call-icon" aria-hidden="true">📞</span>
+            507-625-5000
+          </a>
+        </div>
+      </aside>
+
+      <!-- CENTER: Main content -->
+      <main class="main-content" id="main-content" role="main">
+
+        <!-- Progress indicator -->
+        <div class="progress-container" id="progress-container" aria-label="Progress indicator">
+          <div class="progress-header">
+            <span class="progress-label">Building your path</span>
+            <span class="progress-step" id="progress-step" aria-live="polite">Step 1 of 5</span>
+          </div>
+          <div class="progress-bar-track" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+            <div class="progress-bar-fill" id="progress-fill"></div>
+          </div>
+        </div>
+
+        <!-- Tone Banner (contextual alert — shown after Stage 1) -->
+        <div class="tone-banner calm" id="tone-banner" role="alert" aria-live="polite" style="display:none;"></div>
+
+        <!-- Stage Container — stages rendered by JS -->
+        <div class="stage-container" id="stage-container" aria-live="polite">
+          <!-- Stages injected here by app.js -->
+        </div>
+
+      </main>
+
+      <!-- RIGHT: Live risk meter panel (desktop sidebar) -->
+      <aside class="risk-panel" id="risk-panel" aria-label="Live risk assessment panel">
+        <!-- Built by JS -->
+      </aside>
+
+    </div><!-- /.app-container -->
+
+    <!-- Mobile risk strip (below content on mobile) -->
+    <div class="risk-mobile" id="risk-mobile" aria-label="Risk summary">
+      <div class="risk-mobile-grid">
+        <div class="risk-mobile-item">
+          <div class="risk-mobile-label">License Risk</div>
+          <div class="risk-mobile-value unknown" id="mobile-license-val">—</div>
+        </div>
+        <div class="risk-mobile-item">
+          <div class="risk-mobile-label">Jail Risk</div>
+          <div class="risk-mobile-value unknown" id="mobile-jail-val">—</div>
+        </div>
+        <div class="risk-mobile-item">
+          <div class="risk-mobile-label">Urgency</div>
+          <div class="risk-mobile-value unknown" id="mobile-urgency-val">—</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================
+         FOOTER
+    ============================================================ -->
+    <footer class="app-footer" role="contentinfo">
+      <div class="footer-links">
+        <a href="https://khmnlaw.com" target="_blank" rel="noopener">K&amp;H Minnesota Law</a>
+        <a href="https://khmnlaw.com/contact-us/" target="_blank" rel="noopener">Contact Us</a>
+        <a href="tel:5076255000">507-625-5000</a>
+        <a href="mailto:intake@khmnlaw.com">intake@khmnlaw.com</a>
+        <a href="https://rochesterdwi.com">rochesterdwi.com</a>
+      </div>
+      <p>
+        &copy; 2026 K&amp;H Minnesota Law. All rights reserved.
+        This tool provides educational information only and does not constitute legal advice.
+        No attorney-client relationship is created by using this tool.
+      </p>
+    </footer>
+
+  </div><!-- /.app-wrapper -->
+
+  <!-- ============================================================
+       SCRIPTS — Order matters: dependencies first
+  ============================================================ -->
+  <script src="js/branching-engine.js"></script>
+  <script src="js/risk-calculator.js"></script>
+  <script src="js/results-generator.js"></script>
+  <script src="js/animations.js"></script>
+  <script src="js/app.js"></script>
+
 </body>
 </html>

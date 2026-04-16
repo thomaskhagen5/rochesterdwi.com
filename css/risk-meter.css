@@ -1,0 +1,349 @@
+/* ============================================================
+   risk-meter.css — Live risk panel animations
+   Rochester DWI "Map My Minnesota DWI Path" Tool
+   ============================================================ */
+
+/* --- Risk Panel Sidebar (Desktop Right) --- */
+.risk-panel {
+  flex-shrink: 0;
+  width: var(--risk-panel-width);
+  background: var(--bg-card);
+  border-left: 1px solid var(--border-light);
+  display: none; /* hidden on mobile */
+  flex-direction: column;
+  padding: var(--space-xl) var(--space-lg);
+  min-height: calc(100vh - var(--header-height));
+  position: sticky;
+  top: var(--header-height);
+  height: calc(100vh - var(--header-height));
+  overflow-y: auto;
+}
+
+/* Show on desktop only */
+@media (min-width: 1024px) {
+  .risk-panel { display: flex; }
+}
+
+/* --- Mobile Risk Strip --- */
+.risk-mobile {
+  display: none;
+  background: var(--bg-card);
+  border-top: 1px solid var(--border-light);
+  padding: var(--space-md);
+}
+
+@media (max-width: 1023px) {
+  .risk-mobile { display: block; }
+}
+
+/* --- Panel Header --- */
+.risk-panel-header {
+  margin-bottom: var(--space-xl);
+}
+
+.risk-panel-title {
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: var(--text-light);
+  margin-bottom: var(--space-xs);
+}
+
+.risk-panel-status {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--text-heading);
+  transition: color var(--transition-base);
+}
+
+.risk-panel-status.building { color: var(--text-light); font-style: italic; }
+.risk-panel-status.active   { color: var(--text-heading); }
+
+/* --- Risk Items --- */
+.risk-items {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.risk-item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.risk-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.risk-item-label {
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--text-light);
+}
+
+.risk-item-value {
+  font-size: var(--font-size-sm);
+  font-weight: 800;
+  transition: color var(--transition-slow);
+}
+
+.risk-item-value.low      { color: var(--risk-low); }
+.risk-item-value.moderate { color: var(--risk-moderate); }
+.risk-item-value.high     { color: var(--risk-high); }
+.risk-item-value.unknown  { color: var(--text-light); }
+
+/* --- Risk Bar Track --- */
+.risk-bar-track {
+  height: 8px;
+  background: var(--bg-secondary);
+  border-radius: 99px;
+  overflow: hidden;
+  position: relative;
+}
+
+/* --- Risk Bar Fill --- */
+.risk-bar-fill {
+  height: 100%;
+  border-radius: 99px;
+  width: 0%;
+  transition: width 700ms cubic-bezier(0.4, 0, 0.2, 1), background 600ms ease;
+  position: relative;
+}
+
+/* Color states */
+.risk-bar-fill.low {
+  background: var(--risk-low);
+}
+
+.risk-bar-fill.moderate {
+  background: var(--risk-moderate);
+}
+
+.risk-bar-fill.high {
+  background: var(--risk-high);
+  animation: riskPulse 2s ease-in-out infinite;
+}
+
+@keyframes riskPulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.7; }
+}
+
+/* Bar loading shimmer */
+.risk-bar-fill.loading {
+  background: linear-gradient(
+    90deg,
+    var(--bg-secondary) 25%,
+    #e0e0e0 50%,
+    var(--bg-secondary) 75%
+  );
+  background-size: 200% 100%;
+  animation: barShimmer 1.5s infinite;
+  width: 30%;
+}
+
+@keyframes barShimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* --- Urgency Score --- */
+.urgency-item {
+  background: var(--bg-secondary);
+  border-radius: 10px;
+  padding: var(--space-md);
+  text-align: center;
+  transition: background var(--transition-slow);
+}
+
+.urgency-label {
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-light);
+  margin-bottom: var(--space-sm);
+}
+
+.urgency-score-wrap {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 2px;
+}
+
+.urgency-score {
+  font-size: 42px;
+  font-weight: 900;
+  line-height: 1;
+  transition: color var(--transition-slow);
+}
+
+.urgency-denom {
+  font-size: var(--font-size-base);
+  color: var(--text-light);
+  font-weight: 600;
+}
+
+.urgency-score.score-low      { color: var(--risk-low); }
+.urgency-score.score-moderate { color: var(--risk-moderate); }
+.urgency-score.score-high     { color: var(--risk-high); }
+.urgency-score.score-unknown  { color: var(--text-light); }
+
+.urgency-desc {
+  font-size: var(--font-size-xs);
+  color: var(--text-light);
+  margin-top: var(--space-xs);
+  line-height: 1.35;
+}
+
+/* Urgency background state */
+.urgency-item.score-state-low      { background: var(--risk-low-bg); }
+.urgency-item.score-state-moderate { background: var(--risk-moderate-bg); }
+.urgency-item.score-state-high     {
+  background: var(--risk-high-bg);
+  animation: urgencyPulse 2s ease-in-out infinite;
+}
+
+@keyframes urgencyPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(239,68,68,0); }
+  50%       { box-shadow: 0 0 0 4px rgba(239,68,68,0.15); }
+}
+
+/* --- Info Items (Next Issue / Likely Charge) --- */
+.risk-info-items {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  margin-top: var(--space-lg);
+}
+
+.risk-info-item {
+  padding: var(--space-md);
+  background: var(--bg-secondary);
+  border-radius: 8px;
+  transition: background var(--transition-slow);
+}
+
+.risk-info-label {
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--text-light);
+  margin-bottom: 4px;
+}
+
+.risk-info-value {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--text-heading);
+  line-height: 1.35;
+  min-height: 18px;
+  transition: color var(--transition-slow);
+}
+
+.risk-info-value.unknown { color: var(--text-light); font-weight: 400; font-style: italic; }
+.risk-info-value.high { color: var(--risk-high); }
+.risk-info-value.moderate { color: var(--risk-moderate); }
+
+/* --- Panel Divider --- */
+.risk-divider {
+  height: 1px;
+  background: var(--border-light);
+  margin: var(--space-lg) 0;
+}
+
+/* --- Panel CTA Mini --- */
+.risk-panel-cta {
+  margin-top: auto;
+  padding-top: var(--space-lg);
+}
+
+.risk-panel-cta-text {
+  font-size: var(--font-size-xs);
+  color: var(--text-light);
+  margin-bottom: var(--space-md);
+  line-height: 1.5;
+}
+
+.risk-panel-call-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  width: 100%;
+  padding: 14px var(--space-md);
+  background: var(--brand-primary);
+  color: white;
+  border-radius: 8px;
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  text-decoration: none;
+  min-height: 48px;
+  transition: background var(--transition-fast), transform var(--transition-fast);
+  border: none;
+}
+
+.risk-panel-call-btn:hover {
+  background: var(--brand-hover);
+  transform: translateY(-1px);
+  text-decoration: none;
+}
+
+/* --- Mobile risk strip layout --- */
+.risk-mobile-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-sm);
+}
+
+.risk-mobile-item {
+  text-align: center;
+  padding: var(--space-sm) var(--space-xs);
+}
+
+.risk-mobile-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: var(--text-light);
+  margin-bottom: 4px;
+}
+
+.risk-mobile-value {
+  font-size: var(--font-size-base);
+  font-weight: 800;
+}
+
+.risk-mobile-value.low      { color: var(--risk-low); }
+.risk-mobile-value.moderate { color: var(--risk-moderate); }
+.risk-mobile-value.high     { color: var(--risk-high); }
+.risk-mobile-value.unknown  { color: var(--text-light); }
+
+/* --- Animated count-up for urgency score --- */
+@keyframes countUp {
+  from { transform: translateY(10px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+.urgency-score.animating {
+  animation: countUp 400ms ease both;
+}
+
+/* --- Value change flash --- */
+@keyframes valueFlash {
+  0%   { background: rgba(152,30,37,0.1); }
+  100% { background: transparent; }
+}
+
+.risk-info-item.flashing {
+  animation: valueFlash 500ms ease forwards;
+}
