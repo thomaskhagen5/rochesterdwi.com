@@ -1,0 +1,253 @@
+/* ============================================================
+   cards.css — Answer cards, selection states, touch targets
+   Rochester DWI "Map My Minnesota DWI Path" Tool
+   ============================================================ */
+
+/* --- Card Grid --- */
+.card-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-md);
+}
+
+/* 2 columns for entry stage on larger screens */
+@media (min-width: 640px) {
+  .card-grid.grid-2col {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 768px) {
+  .card-grid.grid-2col {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* --- Answer Card --- */
+.answer-card {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-lg) var(--space-lg);
+  background: var(--bg-card);
+  border: 2px solid var(--border-card);
+  border-radius: 12px;
+  cursor: pointer;
+  text-align: left;
+  width: 100%;
+  min-height: 80px; /* ≥44px required; aiming higher for comfort */
+  position: relative;
+  overflow: hidden;
+  transition:
+    border-color var(--transition-fast),
+    background var(--transition-fast),
+    transform var(--transition-spring),
+    box-shadow var(--transition-fast);
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+/* Ripple / background layer */
+.answer-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--brand-primary);
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+  border-radius: inherit;
+}
+
+/* Hover state */
+.answer-card:hover {
+  border-color: var(--brand-primary);
+  background: var(--bg-card-hover);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-card-hover);
+}
+
+/* Active / pressed state */
+.answer-card:active {
+  transform: scale(0.98) translateY(0);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Selected state */
+.answer-card.selected {
+  border-color: var(--brand-primary);
+  background: #fff5f5;
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-card-hover);
+}
+
+.answer-card.selected .card-label {
+  color: var(--brand-primary);
+}
+
+/* Focus (keyboard) */
+.answer-card:focus-visible {
+  outline: 3px solid var(--brand-primary);
+  outline-offset: 2px;
+}
+
+/* --- Card Icon --- */
+.card-icon {
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  background: var(--bg-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  transition:
+    background var(--transition-fast),
+    transform var(--transition-spring);
+}
+
+.answer-card:hover .card-icon {
+  background: rgba(152,30,37,0.08);
+  transform: scale(1.08);
+}
+
+.answer-card.selected .card-icon {
+  background: rgba(152,30,37,0.12);
+}
+
+/* --- Card Text --- */
+.card-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.card-label {
+  display: block;
+  font-size: var(--font-size-base);
+  font-weight: 700;
+  color: var(--text-heading);
+  line-height: 1.25;
+  margin-bottom: 3px;
+  transition: color var(--transition-fast);
+}
+
+.card-sublabel {
+  display: block;
+  font-size: var(--font-size-sm);
+  color: var(--text-light);
+  line-height: 1.35;
+}
+
+/* --- Card Check indicator --- */
+.card-check {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid var(--border-card);
+  background: transparent;
+  transition:
+    border-color var(--transition-fast),
+    background var(--transition-fast),
+    transform var(--transition-spring);
+  position: relative;
+}
+
+.card-check::after {
+  content: '';
+  position: absolute;
+  inset: 3px;
+  background: var(--brand-primary);
+  border-radius: 50%;
+  opacity: 0;
+  transform: scale(0);
+  transition:
+    opacity var(--transition-fast),
+    transform var(--transition-spring);
+}
+
+.answer-card.selected .card-check {
+  border-color: var(--brand-primary);
+  transform: scale(1.1);
+}
+
+.answer-card.selected .card-check::after {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* --- Entry stage cards (larger / more prominent) --- */
+.stage-entry .answer-card {
+  padding: var(--space-lg) var(--space-xl);
+  min-height: 88px;
+}
+
+.stage-entry .card-icon {
+  width: 52px;
+  height: 52px;
+  font-size: 24px;
+}
+
+.stage-entry .card-label {
+  font-size: var(--font-size-lg);
+}
+
+/* --- Selected confirmation animation --- */
+@keyframes cardSelect {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(0.97); }
+  70%  { transform: scale(1.02); }
+  100% { transform: scale(1) translateY(-1px); }
+}
+
+.answer-card.selecting {
+  animation: cardSelect 300ms ease forwards;
+}
+
+/* --- "Thinking" shimmer for cards when loading --- */
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.card-skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--bg-secondary) 25%,
+    #e8e8e8 50%,
+    var(--bg-secondary) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border: 2px solid transparent;
+  min-height: 80px;
+  border-radius: 12px;
+}
+
+/* --- Warning card variant --- */
+.answer-card.card-warning {
+  border-color: var(--risk-moderate);
+  background: var(--risk-moderate-bg);
+}
+
+.answer-card.card-critical {
+  border-color: var(--risk-high);
+  background: var(--risk-high-bg);
+}
+
+/* --- Stagger animation for card grids --- */
+.card-grid .answer-card {
+  animation: cardSlideIn 350ms ease both;
+}
+
+.card-grid .answer-card:nth-child(1) { animation-delay: 0ms; }
+.card-grid .answer-card:nth-child(2) { animation-delay: 50ms; }
+.card-grid .answer-card:nth-child(3) { animation-delay: 100ms; }
+.card-grid .answer-card:nth-child(4) { animation-delay: 150ms; }
+.card-grid .answer-card:nth-child(5) { animation-delay: 200ms; }
+.card-grid .answer-card:nth-child(6) { animation-delay: 250ms; }
+
+@keyframes cardSlideIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}

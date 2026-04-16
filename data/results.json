@@ -1,0 +1,190 @@
+{
+  "_comment": "Results templates for the DWI Path tool. Implemented in js/results-generator.js.",
+
+  "snapshotBanners": {
+    "critical": {
+      "urgencyLabel": "🚨 Critical Urgency — Act Today",
+      "cssClass": "snapshot-urgency-critical"
+    },
+    "urgent": {
+      "urgencyLabel": "⚠️ High Urgency — Act This Week",
+      "cssClass": "snapshot-urgency-urgent"
+    },
+    "concerned": {
+      "urgencyLabel": "⚡ Elevated Risk — Review Your Options",
+      "cssClass": "snapshot-urgency-concerned"
+    },
+    "calm": {
+      "urgencyLabel": "✅ Options Available — Take Smart Action",
+      "cssClass": "snapshot-urgency-calm"
+    }
+  },
+
+  "likelyCharges": {
+    "first_breath":    "Misdemeanor DWI (1st offense)",
+    "first_blood":     "Misdemeanor DWI (1st offense) — pending results",
+    "first_urine":     "Misdemeanor DWI (1st offense)",
+    "first_refused":   "1st Degree Test Refusal (Misdemeanor)",
+    "one_prior_any":   "Gross Misdemeanor DWI (2nd offense)",
+    "one_prior_refuse":"Gross Misdemeanor Test Refusal",
+    "multiple_any":    "Felony DWI (3rd+ offense)",
+    "multiple_refuse": "Felony DWI + Test Refusal"
+  },
+
+  "countyContent": {
+    "olmsted": {
+      "icon": "⚖️",
+      "name": "Olmsted County — Third Judicial District",
+      "courthouse": "Olmsted County Government Center, Rochester",
+      "note": "We know this courthouse, these prosecutors, and these procedures. Our Rochester office is minutes away.",
+      "ctaNote": "Rochester office — 5 minutes from Olmsted County Courthouse"
+    },
+    "blue-earth": {
+      "icon": "⚖️",
+      "name": "Blue Earth County — Fifth Judicial District",
+      "courthouse": "Blue Earth County Law Enforcement Center, Mankato",
+      "note": "We serve clients throughout southern Minnesota including Blue Earth County.",
+      "ctaNote": null
+    },
+    "other": {
+      "icon": "📍",
+      "name": "Southern Minnesota — We Cover Your County",
+      "courthouse": "Contact us to discuss your specific county",
+      "note": "K&H Minnesota Law serves clients throughout southern Minnesota. Call us to discuss your county.",
+      "ctaNote": null
+    }
+  },
+
+  "fearContent": {
+    "jail": {
+      "icon": "🔒",
+      "title": "Addressing Your Jail Concern",
+      "keyPoints": [
+        "First offense: Jail is rarely imposed with proper representation",
+        "Second offense: 30-day mandatory minimum (often served as home monitoring)",
+        "Third+ offense: 180-day mandatory minimum — defense strategy is critical",
+        "Early action consistently produces better jail outcomes"
+      ]
+    },
+    "license": {
+      "icon": "🚗",
+      "title": "Protecting Your License",
+      "keyPoints": [
+        "7-day window to challenge revocation — do not miss this",
+        "Work permits and limited licenses available during revocation",
+        "Ignition interlock program can restore full driving privileges sooner",
+        "Revocation periods: 90 days (1st), 1 year (2nd), 2+ years (3rd+)"
+      ]
+    },
+    "interlock": {
+      "icon": "🔑",
+      "title": "Understanding Ignition Interlock",
+      "keyPoints": [
+        "A breathalyzer device installed in your vehicle",
+        "Required for 2nd offense+, test refusal, and high BAC cases",
+        "Cost: approximately $60–$90/month to lease",
+        "Often worth it to restore full driving privileges sooner"
+      ]
+    },
+    "cost": {
+      "icon": "💰",
+      "title": "Understanding the Real Costs",
+      "keyPoints": [
+        "Total DWI cost without help: $10,000–$20,000+ over 3–5 years",
+        "Fines ($1,000–$3,000), insurance increases ($3,000–$8,000+), reinstatement fees",
+        "Attorney fees: $1,500–$5,000 (misdemeanor), $5,000–$15,000 (felony)",
+        "Good representation typically saves far more than it costs — free consultation available"
+      ]
+    },
+    "job": {
+      "icon": "💼",
+      "title": "Protecting Your Employment",
+      "keyPoints": [
+        "CDL holders: DWI conviction can cause immediate CDL disqualification",
+        "Professional licenses (healthcare, law, etc.) may have reporting requirements",
+        "Acting before conviction gives the most employment protection options",
+        "Expungement may be available after a waiting period"
+      ]
+    },
+    "court": {
+      "icon": "⚖️",
+      "title": "Going to Court — What to Expect",
+      "keyPoints": [
+        "First court date (arraignment): enter not guilty plea — no decisions required",
+        "Pre-trial process: evidence review, motions, and negotiation",
+        "Most cases resolve through negotiated pleas before trial",
+        "Typical timeline: 3–9 months for misdemeanor, longer for felony"
+      ]
+    }
+  },
+
+  "timelineItems": {
+    "7days": {
+      "period": "Within 7 Days",
+      "icon": "🔴",
+      "urgent": true,
+      "actions": [
+        "File petition for implied consent hearing (if license was revoked)",
+        "Write down all details about the stop and arrest",
+        "Contact a DWI attorney for emergency case review",
+        "Save and organize all paperwork (citation, DL-7, bond papers)",
+        "Do NOT drive until you confirm your license status"
+      ]
+    },
+    "30days": {
+      "period": "Within 30 Days",
+      "icon": "🟡",
+      "urgent": false,
+      "actions": [
+        "Attend arraignment (first court appearance)",
+        "Work with attorney on defense strategy",
+        "Monitor blood test results if applicable",
+        "Attend implied consent hearing if requested",
+        "Explore limited license and work permit options"
+      ]
+    },
+    "90days": {
+      "period": "Within 90 Days",
+      "icon": "🟢",
+      "urgent": false,
+      "actions": [
+        "Pre-trial motions filed (if applicable)",
+        "Plea negotiations or trial preparation begins",
+        "Mandatory sentencing evaluation (felony cases)",
+        "Complete court-ordered chemical dependency evaluation",
+        "Review all evidence with your attorney"
+      ]
+    }
+  },
+
+  "mistakesToAvoid": [
+    {
+      "title": "Waiting on the License Deadline",
+      "desc": "The 7-day window to challenge license revocation is the most commonly missed opportunity. Even if pleading guilty to the DWI, you may be able to challenge the license revocation separately."
+    },
+    {
+      "title": "Talking About Your Case",
+      "desc": "Do not discuss your case with anyone except your attorney — including friends, family, social media, and text messages. Anything you say can be used against you."
+    },
+    {
+      "title": "Treating Test Refusal Like a Regular DWI",
+      "desc": "Refusal is a separate criminal charge with its own consequences and defense strategy. Many people don't realize they face two separate legal issues."
+    },
+    {
+      "title": "Waiting for Blood Results to Act",
+      "desc": "Blood results take 2–6 weeks. The license challenge deadline won't wait. Don't delay taking action just because you're waiting for lab results."
+    },
+    {
+      "title": "Missing Your Court Date",
+      "desc": "Failure to appear results in an automatic arrest warrant and additional criminal charges. Put your court date somewhere you absolutely will not miss it."
+    },
+    {
+      "title": "Underestimating Multiple Priors",
+      "desc": "With multiple prior DWIs, mandatory minimums apply that judges have limited ability to reduce. Just pleading guilty is rarely the right strategy."
+    },
+    {
+      "title": "Driving Without Confirming License Status",
+      "desc": "Driving on a revoked license adds additional criminal charges and can result in vehicle forfeiture. Always verify your status before driving."
+    }
+  ]
+}

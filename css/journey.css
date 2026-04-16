@@ -1,0 +1,347 @@
+/* ============================================================
+   journey.css — Animated roadmap / visual path
+   Rochester DWI "Map My Minnesota DWI Path" Tool
+   ============================================================ */
+
+/* --- Journey Panel Sidebar (Desktop Left) --- */
+.journey-panel {
+  flex-shrink: 0;
+  width: var(--roadmap-width);
+  background: var(--bg-dark);
+  display: none; /* hidden on mobile, shown on desktop */
+  flex-direction: column;
+  padding: var(--space-xl) var(--space-lg);
+  min-height: calc(100vh - var(--header-height));
+  position: sticky;
+  top: var(--header-height);
+  height: calc(100vh - var(--header-height));
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* --- Journey Mobile Top Bar --- */
+.journey-mobile {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-md) var(--space-md);
+  background: var(--bg-dark);
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.journey-mobile::-webkit-scrollbar { display: none; }
+
+/* Show mobile bar, hide sidebar on mobile */
+@media (max-width: 1023px) {
+  .journey-panel { display: none !important; }
+  .journey-mobile { display: flex; }
+}
+
+/* Show sidebar, hide mobile bar on desktop */
+@media (min-width: 1024px) {
+  .journey-panel { display: flex; }
+  .journey-mobile { display: none !important; }
+}
+
+/* --- Panel Header --- */
+.journey-panel-header {
+  margin-bottom: var(--space-xl);
+}
+
+.journey-panel-title {
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: rgba(255,255,255,0.4);
+  margin-bottom: var(--space-sm);
+}
+
+.journey-panel-headline {
+  font-size: var(--font-size-lg);
+  font-weight: 800;
+  color: white;
+  line-height: 1.25;
+}
+
+/* --- Roadmap (Desktop Vertical) --- */
+.roadmap {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  flex: 1;
+  padding-top: var(--space-lg);
+}
+
+/* --- Roadmap Node --- */
+.roadmap-node {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-md);
+  padding: 14px 0;
+  position: relative;
+  transition: opacity var(--transition-slow);
+}
+
+/* Vertical connector line */
+.roadmap-node:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  left: 19px;
+  top: 52px;
+  bottom: -14px;
+  width: 2px;
+  background: rgba(255,255,255,0.12);
+  transition: background var(--transition-slow);
+}
+
+.roadmap-node.completed:not(:last-child)::after {
+  background: var(--brand-primary);
+}
+
+/* Node icon circle */
+.roadmap-node-icon {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.08);
+  border: 2px solid rgba(255,255,255,0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  position: relative;
+  z-index: 1;
+  transition:
+    background var(--transition-slow),
+    border-color var(--transition-slow),
+    transform var(--transition-spring),
+    box-shadow var(--transition-slow);
+}
+
+/* Pulse ring for current node */
+.roadmap-node.current .roadmap-node-icon::before {
+  content: '';
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  border: 2px solid var(--brand-primary);
+  animation: nodePulse 2s ease-in-out infinite;
+}
+
+@keyframes nodePulse {
+  0%, 100% { opacity: 0.6; transform: scale(1); }
+  50%       { opacity: 0.2; transform: scale(1.2); }
+}
+
+/* Node states */
+.roadmap-node.inactive .roadmap-node-icon {
+  background: rgba(255,255,255,0.05);
+  border-color: rgba(255,255,255,0.1);
+}
+
+.roadmap-node.current .roadmap-node-icon {
+  background: rgba(152,30,37,0.3);
+  border-color: var(--brand-primary);
+  transform: scale(1.1);
+  box-shadow: 0 0 20px rgba(152,30,37,0.4);
+}
+
+.roadmap-node.completed .roadmap-node-icon {
+  background: var(--brand-primary);
+  border-color: var(--brand-primary);
+}
+
+.roadmap-node.alert .roadmap-node-icon {
+  background: rgba(239,68,68,0.25);
+  border-color: var(--risk-high);
+  animation: alertPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes alertPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(239,68,68,0.4); }
+  50%       { box-shadow: 0 0 0 8px rgba(239,68,68,0); }
+}
+
+/* Node content */
+.roadmap-node-content { flex: 1; padding-top: 8px; }
+
+.roadmap-node-label {
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: rgba(255,255,255,0.4);
+  line-height: 1;
+  margin-bottom: 3px;
+  transition: color var(--transition-slow);
+}
+
+.roadmap-node-desc {
+  font-size: var(--font-size-xs);
+  color: rgba(255,255,255,0.25);
+  line-height: 1.35;
+  transition: color var(--transition-slow);
+}
+
+/* Active/completed state text */
+.roadmap-node.current .roadmap-node-label {
+  color: white;
+}
+.roadmap-node.current .roadmap-node-desc {
+  color: rgba(255,255,255,0.6);
+}
+.roadmap-node.completed .roadmap-node-label {
+  color: rgba(255,255,255,0.7);
+}
+.roadmap-node.completed .roadmap-node-desc {
+  color: rgba(255,255,255,0.4);
+}
+.roadmap-node.alert .roadmap-node-label {
+  color: #fca5a5;
+}
+.roadmap-node.alert .roadmap-node-desc {
+  color: rgba(252,165,165,0.7);
+}
+
+/* Checkmark for completed */
+.roadmap-node.completed .roadmap-node-icon::after {
+  content: '✓';
+  font-size: 16px;
+  color: white;
+  font-weight: 700;
+}
+
+/* Override emoji for completed state */
+.roadmap-node.completed .node-emoji { display: none; }
+
+/* --- Mobile Roadmap Nodes (Horizontal Dots) --- */
+.roadmap-mobile-node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.roadmap-mobile-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.08);
+  border: 2px solid rgba(255,255,255,0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  transition:
+    background var(--transition-slow),
+    border-color var(--transition-slow),
+    transform var(--transition-spring);
+  position: relative;
+}
+
+.roadmap-mobile-node.current .roadmap-mobile-icon {
+  background: rgba(152,30,37,0.3);
+  border-color: var(--brand-primary);
+  transform: scale(1.15);
+}
+
+.roadmap-mobile-node.completed .roadmap-mobile-icon {
+  background: var(--brand-primary);
+  border-color: var(--brand-primary);
+  font-size: 0; /* hide emoji */
+}
+
+.roadmap-mobile-node.completed .roadmap-mobile-icon::after {
+  content: '✓';
+  font-size: 13px;
+  color: white;
+  font-weight: 700;
+}
+
+.roadmap-mobile-node.alert .roadmap-mobile-icon {
+  background: rgba(239,68,68,0.25);
+  border-color: var(--risk-high);
+}
+
+.roadmap-mobile-label {
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: rgba(255,255,255,0.3);
+  white-space: nowrap;
+}
+
+.roadmap-mobile-node.current .roadmap-mobile-label { color: white; }
+.roadmap-mobile-node.completed .roadmap-mobile-label { color: rgba(255,255,255,0.6); }
+
+/* Mobile connector between nodes */
+.roadmap-mobile-connector {
+  width: 24px;
+  height: 2px;
+  background: rgba(255,255,255,0.12);
+  flex-shrink: 0;
+  align-self: center;
+  margin-bottom: 18px;
+  transition: background var(--transition-slow);
+}
+
+.roadmap-mobile-connector.active {
+  background: var(--brand-primary);
+}
+
+/* --- Journey Panel Bottom (Desktop) --- */
+.journey-panel-footer {
+  margin-top: var(--space-2xl);
+  padding-top: var(--space-lg);
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+.journey-call-prompt {
+  font-size: var(--font-size-xs);
+  color: rgba(255,255,255,0.4);
+  margin-bottom: var(--space-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  font-weight: 600;
+}
+
+.journey-call-link {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  color: white;
+  font-size: var(--font-size-base);
+  font-weight: 700;
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+.journey-call-link:hover {
+  color: var(--brand-primary);
+  text-decoration: none;
+}
+
+.journey-call-icon { font-size: 20px; }
+
+/* --- Roadmap entry animation --- */
+.journey-panel .roadmap-node {
+  animation: nodeSlideIn 400ms ease both;
+}
+
+.journey-panel .roadmap-node:nth-child(1)  { animation-delay: 0ms; }
+.journey-panel .roadmap-node:nth-child(3)  { animation-delay: 60ms; }
+.journey-panel .roadmap-node:nth-child(5)  { animation-delay: 120ms; }
+.journey-panel .roadmap-node:nth-child(7)  { animation-delay: 180ms; }
+.journey-panel .roadmap-node:nth-child(9)  { animation-delay: 240ms; }
+.journey-panel .roadmap-node:nth-child(11) { animation-delay: 300ms; }
+
+@keyframes nodeSlideIn {
+  from { opacity: 0; transform: translateX(-12px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
